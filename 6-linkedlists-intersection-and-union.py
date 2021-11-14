@@ -5,6 +5,23 @@
 
 # We have provided a code template below, you are not required to use it:
 
+#--------------TIME AND SPACE COMPLEXITY ANALYSES----------
+# union:
+#           SPACE:    1LinkedList (4n) + 1dict (4 + 1)n = 9n
+#           TIME:     O(n ** 2)
+#
+# intersection:
+#           SPACE:    1LinkedList (4n) + 2dict (4 + 1)n = 14n
+#           TIME:     O(n)
+#
+# DETAILS:
+# Node:
+#       SPACE:  2 * sizeof(uint)
+#       TIME:   O(1)
+# LinkedList:
+#       SPACE:  n * sizeof(uint)
+#       TIME:   append: O(n)    size:  O(n)
+
 class Node:
     def __init__(self, value):
         self.value = value
@@ -26,9 +43,7 @@ class LinkedList:
             cur_head = cur_head.next
         return out_string
 
-
     def append(self, value):
-
         if self.head is None:
             self.head = Node(value)
             return
@@ -36,7 +51,6 @@ class LinkedList:
         node = self.head
         while node.next:
             node = node.next
-
         node.next = Node(value)
 
     def size(self):
@@ -45,7 +59,6 @@ class LinkedList:
         while node:
             size += 1
             node = node.next
-
         return size
 
 

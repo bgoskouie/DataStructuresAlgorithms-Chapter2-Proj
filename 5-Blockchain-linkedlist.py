@@ -13,6 +13,18 @@
 
 # First is the information hash:
 
+#--------------TIME AND SPACE COMPLEXITY ANALYSES----------
+# SPACE:    435 + 132 * n  bytes
+# TIME:     O(1)
+#
+# DETAILS:
+# Block:
+#       SPACE:  timestamp (50 chars) + data (1uint) + previous_hash (128) + hash (128) = 307 bytes
+#       TIME:   O(1)
+# BlockChain:
+#       SPACE:  1Block (307) + 1hash (128) + 1dict (128 + 4) * n = 435 + 132 * n bytes
+#       TIME:   O(1)
+
 
 import hashlib
 from datetime import datetime

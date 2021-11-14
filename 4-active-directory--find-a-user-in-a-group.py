@@ -2,6 +2,19 @@
 # In Windows Active Directory, a group can consist of user(s) and group(s) themselves.
 # We can construct this hierarchy as such. Where User is represented by str representing their ids.
 
+#--------------TIME AND SPACE COMPLEXITY ANALYSES----------
+# SPACE:    2 * n * 10   (assuming each string would take 10 chars = 10 bytes)
+# TIME:     is_user_in_group:   O(n**2)
+#
+# DETAILS:
+# Group:
+#       SPACE:  1 string, 2 lists;
+#       TIME:   O(1)
+# is_user_in_group:
+#       SPACE:  (m + n) * sizeof(string)
+#       TIME:   O(m * n)    m users, n groups
+
+
 class Group(object):
     def __init__(self, _name):
         self.name = _name
