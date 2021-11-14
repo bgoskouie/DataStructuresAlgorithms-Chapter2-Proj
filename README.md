@@ -13,11 +13,16 @@ This Project includs six tasks:
 - Linked List: Intersection and Union
 
 The Solution of each of these tasks is in a single .py file under the name of 1-xxx.py.
-The Big O analysis can be found within the same .py file:
+The Big O analysis can be found within the same .py file of each project.
 
 
-Useful Links:
+Useful Links/Resources:
  - To learn about space complexity:
     https://www.geeksforgeeks.org/g-fact-86/
  - To learn Python:
+   https://www.learnpython.org/
+   https://www.programiz.com/python-programming
+ - Edge case vs corner case:
+   https://stackoverflow.com/questions/47560177/what-is-the-explicit-difference-between-an-edge-case-and-a-corner-case
+
 
