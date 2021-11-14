@@ -15,3 +15,9 @@ This Project includs six tasks:
 The Solution of each of these tasks is in a single .py file under the name of 1-xxx.py.
 The Big O analysis can be found within the same .py file:
 
+
+Useful Links:
+ - To learn about space complexity:
+    https://www.geeksforgeeks.org/g-fact-86/
+ - To learn Python:
+

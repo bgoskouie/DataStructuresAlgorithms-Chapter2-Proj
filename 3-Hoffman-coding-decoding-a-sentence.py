@@ -60,6 +60,27 @@
 # Repeat steps #2 and #3 until the encoded data is completely traversed.
 # You will have to implement the logic for both encoding and decoding in the following template. Also, you will need to create the sizing schemas to present a summary.
 
+#--------------TIME AND SPACE COMPLEXITY ANALYSES----------
+# SPACE:    2 * n * sizeof(uint)
+# TIME:     huffman_encoding:   O(n ** 2 / 2)
+#           huffman_decoding:   O(n)
+#
+# DETAILS:
+# HoffmanNode:
+#       SPACE:  2 uints;
+#       TIME:   setNext O(1), isPrior O(1)
+# PriorityQueue:
+#       SPACE:  1 HoffmanNode, 1 uint;
+#       TIME:   insert O(n), pop O(1)
+# huffmanGetCharactersCodes:
+#       SPACE:  sizeof(uint)*(2*n) + n**2/2;
+#       TIME:   O(n)
+# huffman_encoding:
+#       SPACE:  1 PriorityQueue, n HoffmanNodes = ((n + 1) * 2 + 1)* sizeof(uint)  ~ 2n*sizeof(uint)
+#       TIME:   O(n ** 2 / 2)
+# huffman_decoding:
+#       TIME:   O(n)
+
 import sys
 
 
@@ -73,7 +94,7 @@ class HoffmanNode:
         self.value = value  # the letter
         self.left = left
         self.right = right
-        self.next = None   #next
+        self.next = None   # next
 
     def setNext(self, next):
         self.next = next
@@ -86,8 +107,9 @@ class HoffmanNode:
         # I don't know how to do it!
         return self.priority < node.priority
 
+    """
     def getCharactersCodes(self):
-        """Run it on the root node of the Hoffman Tree"""
+        ""Run it on the root node of the Hoffman Tree""
         def recur(characters_codes_d, code_from_root, node):
             if node.left is None and node.right is None:
                 # This is a leaf node! Append the data:
@@ -101,6 +123,7 @@ class HoffmanNode:
         characters_codes_d = dict()
         recur(characters_codes_d, code_from_root, self)
         return characters_codes_d
+    """
 
 class PriorityQueue:
     def __init__(self):
@@ -125,7 +148,6 @@ class PriorityQueue:
             else:
                 self.head = node
             node.next = elm
-            a = 0
 
     def pop(self):
         elm = self.head
@@ -138,7 +160,23 @@ class PriorityQueue:
     def size(self):
         return self.__size
 
-
+def huffmanGetCharactersCodes(head):
+    """Run it on the root node of the Hoffman Tree
+    head should be of type HoffmanNode"""
+    def recur(characters_codes_d, code_from_root, node):
+        if node.left is None and node.right is None:
+            # This is a leaf node! Append the data:
+            characters_codes_d.update({node.value: code_from_root})
+        if node.left is not None:
+            recur(characters_codes_d, code_from_root + "0", node.left)
+        if node.right is not None:
+            recur(characters_codes_d, code_from_root + "1", node.right)
+    appended_codes = ""
+    code_from_root = ""
+    characters_codes_d = dict()
+    if head is not None:
+        recur(characters_codes_d, code_from_root, head)
+    return characters_codes_d
 
 
 def huffman_encoding(string_in):
@@ -161,36 +199,57 @@ def huffman_encoding(string_in):
         n2 = pq.pop()
         node = HoffmanNode(n1.priority + n2.priority, value=None, left=n1, right=n2)   #, next=None)
         pq.insert(node)
-    characters_code_d = pq.head.getCharactersCodes()
+    # characters_code_d = pq.head.getCharactersCodes()
+    characters_code_d = huffmanGetCharactersCodes(pq.head)
     binary_code = ""
     for c in string_in:
         binary_code += characters_code_d[c]
     return binary_code, pq.head
 
 def huffman_decoding(encoded_binary_data, tree_root):
-    decoded_data = ""
+    decoded_data = ''
     node = tree_root
-    for idx, c in enumerate(encoded_binary_data):
-        if c == "0":
-            node = node.left
-        elif c == "1":
-            node = node.right
-        else:
-            raise Exception(f"Nonzero or one encoded data of \"{c}\" is found")
-        if node.value is not None:
-            decoded_data += node.value
-            node = tree_root
+    if encoded_binary_data == '':
+        if node is not None:
+            decoded_data = node.value * node.priority
+    else:
+        for idx, c in enumerate(encoded_binary_data):
+            if c == "0":
+                node = node.left
+            elif c == "1":
+                node = node.right
+            else:
+                raise Exception(f"Nonzero or one encoded data of \"{c}\" is found")
+            if node.value is not None:
+                decoded_data += node.value
+                node = tree_root
     return decoded_data
 
 
 if __name__ == "__main__":
     codes = {}
+    print("--------------------Starting Test 1--------------------")
     a_great_sentence = "The bird is the word"   # "ABBCCCDDDDEEEEE"
     print ("The size of the data is: {}\n".format(sys.getsizeof(a_great_sentence)))
     print ("The content of the data is: {}\n".format(a_great_sentence))
-    encoded_data, tree = huffman_encoding(a_great_sentence)
-    print ("The size of the encoded data is: {}\n".format(sys.getsizeof(int(encoded_data, base=2))))
-    print ("The content of the encoded data is: {}\n".format(encoded_data))
-    decoded_data = huffman_decoding(encoded_data, tree)
-    print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
-    print ("The content of the encoded data is: {}\n".format(decoded_data))
+    encoded_data1, tree1 = huffman_encoding(a_great_sentence)
+    print ("The size of the encoded data is: {}\n".format(sys.getsizeof(int(encoded_data1, base=2))))
+    print ("The content of the encoded data is: {}\n".format(encoded_data1))
+    decoded_data1 = huffman_decoding(encoded_data1, tree1)
+    print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data1)))
+    print ("The content of the encoded data is: {}\n".format(decoded_data1))
+
+    print("--------------------Starting Test 2--------------------")
+    encoded_data2, tree2 = huffman_encoding("AAAAAAAAAAAAAA")
+    decoded_data2 = huffman_decoding(encoded_data2, tree2)
+    print(decoded_data2)
+
+    print("--------------------Starting Test 3--------------------")
+    encoded_data3, tree3 = huffman_encoding("")
+    decoded_data3 = huffman_decoding(encoded_data3, tree3)
+    print(decoded_data3)
+
+    print("--------------------Starting Test 4--------------------")
+    encoded_data4, tree4 = huffman_encoding("AAAAAAAAAAAAAABBB")
+    decoded_data4 = huffman_decoding(encoded_data4, tree4)
+    print(decoded_data4)

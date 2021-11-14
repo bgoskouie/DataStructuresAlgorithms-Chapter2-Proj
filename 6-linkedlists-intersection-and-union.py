@@ -116,6 +116,7 @@ def test_union(el1, el2, result):
             print(f"Failed as {el} should be in union. Failure mode 2.")
     print("union test passed")
 
+
 def test_inter(el1, el2, result):
     inter = [el for el in el1 if el in el2]
     n = result.head
@@ -135,44 +136,89 @@ def test_inter(el1, el2, result):
             print(f"Failed as {el} should be in inter. Failure mode 2.")
             return
     print("inter test passed")
-# Test case 1
 
-linked_list_1 = LinkedList()
-linked_list_2 = LinkedList()
 
-element_1 = [3,2,4,35,6,65,6,4,3,21]
-element_2 = [6,32,4,9,6,1,11,21,1]
+if __name__ == "__main__":
+    print("--------------------Starting Test 1--------------------")
+    linked_list_11 = LinkedList()
+    linked_list_12 = LinkedList()
 
-for i in element_1:
-    linked_list_1.append(i)
+    element_1 = [3,2,4,35,6,65,6,4,3,21]
+    element_2 = [6,32,4,9,6,1,11,21,1]
 
-for i in element_2:
-    linked_list_2.append(i)
-u = union(linked_list_1,linked_list_2)
-i = intersection(linked_list_1,linked_list_2)
-print(f"union: {u}")
-print(f"intersection: {i}")
-test_union(element_1, element_2, u)
-test_inter(element_1, element_2, i)
+    for i in element_1:
+        linked_list_11.append(i)
 
-# Test case 2
+    for i in element_2:
+        linked_list_12.append(i)
+    u = union(linked_list_11,linked_list_12)
+    i = intersection(linked_list_11,linked_list_12)
+    print(f"union: {u}")
+    print(f"intersection: {i}")
+    test_union(element_1, element_2, u)
+    test_inter(element_1, element_2, i)
 
-linked_list_3 = LinkedList()
-linked_list_4 = LinkedList()
+    # Test case 2
+    print("--------------------Starting Test 2--------------------")
+    linked_list_21 = LinkedList()
+    linked_list_22 = LinkedList()
 
-element_1 = [3,2,4,35,6,65,6,4,3,23]
-element_2 = [1,7,8,9,11,21,1]
+    element_1 = [3,2,4,35,6,65,6,4,3,23]
+    element_2 = [1,7,8,9,11,21,1]
 
-for i in element_1:
-    linked_list_3.append(i)
+    for i in element_1:
+        linked_list_21.append(i)
 
-for i in element_2:
-    linked_list_4.append(i)
+    for i in element_2:
+        linked_list_22.append(i)
 
-u = union(linked_list_3,linked_list_4)
-i = intersection(linked_list_3,linked_list_4)
+    u = union(linked_list_21,linked_list_22)
+    i = intersection(linked_list_21,linked_list_22)
 
-print(f"union: {u}")
-print(f"intersection: {i}")
-test_union(element_1, element_2, u)
-test_inter(element_1, element_2, i)
+    print(f"union: {u}")
+    print(f"intersection: {i}")
+    test_union(element_1, element_2, u)
+    test_inter(element_1, element_2, i)
+
+    # Test case 2
+    print("--------------------Starting Test 3--------------------")
+    linked_list_31 = LinkedList()
+    linked_list_32 = LinkedList()
+
+    element_1 = []
+    element_2 = [1,7,8,9,11,21,1]
+
+    for i in element_1:
+        linked_list_31.append(i)
+
+    for i in element_2:
+        linked_list_32.append(i)
+
+    u = union(linked_list_31,linked_list_32)
+    i = intersection(linked_list_31,linked_list_32)
+
+    print(f"union: {u}")
+    print(f"intersection: {i}")
+    test_union(element_1, element_2, u)
+    test_inter(element_1, element_2, i)
+
+    print("--------------------Starting Test 4--------------------")
+    linked_list_41 = LinkedList()
+    linked_list_42 = LinkedList()
+
+    element_1 = []
+    element_2 = [1,7,8,9,11,21,1]
+
+    for i in element_1:
+        linked_list_41.append(i)
+
+    for i in element_2:
+        linked_list_42.append(i)
+
+    u = union(linked_list_41,linked_list_42)
+    i = intersection(linked_list_41,linked_list_42)
+
+    print(f"union: {u}")
+    print(f"intersection: {i}")
+    test_union(element_1, element_2, u)
+    test_inter(element_1, element_2, i)

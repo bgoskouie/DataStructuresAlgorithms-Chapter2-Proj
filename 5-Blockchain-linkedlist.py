@@ -24,29 +24,36 @@ class Block:
         self.previous_hash = previous_hash
         self.hash = self.calc_hash(timestamp + data)
 
-    def calc_hash(self):
+    def calc_hash(self, _string):
         sha = hashlib.sha256()
-        hash_str = "We are going to encode this string of data!".encode('utf-8')
+        hash_str = _string.encode('utf-8')
         sha.update(hash_str)
         return sha.hexdigest()
 
     def get_hash(self):
         return self.hash
 
+    def __str__(self):
+        return f"timestamp: {self.timestamp}, data={self.data}, hash={self.hash}\n"
+
 
 class BlockChain():
     """A linked-list of Blocks"""
     def __init__(self):
-        self.tail = None
+        self.head = None  # is the element in the chain that is added last (not first)
         self.prev_hash = None
         self.d = dict()
 
-    def insert(self, data):
-        now = datetime.now().__str__()
-        b = Block(now, data, self.prev_hash)
-        self.prev_hash = b.get_hash()
-        self.tail = b
-        self.d.update({self.prev_hash, data})
+    def insert(self, data, timestamp=None):
+        if timestamp is None:
+            timestamp = datetime.now().__str__()
+        b = Block(timestamp, data, self.prev_hash)
+        if b.get_hash() not in self.d.keys():
+            self.prev_hash = b.get_hash()
+            self.head = b
+            self.d.update({self.prev_hash: b})
+        else:
+            print(f"Not adding this data to the blockchain as it already exists under same timestamp \"{timestamp}\" and data \"{data}\".")
 
     def getByHash(self, hash):
         if hash in self.d:
@@ -54,9 +61,42 @@ class BlockChain():
         else:
             return None
 
+    def __str__(self):
+        b = self.head
+        s = ""
+        if b is None:
+            return "Blockchain is empty!"
+        while b.previous_hash is not None:
+            s = str(b) + s
+            b = self.d[b.previous_hash]
+        s = str(b) + s
+        s = "Blockchain blocks are as follows:\n" + s
+        return s
 
-bc = BlockChain()
-bc.insert("my first sentence")
-bc.insert("Here's a second sentence. Have two now!")
-bc.insert("A third sentence is now being added to the block-chain")
-bc.getByHash("HashThatDoesN'tExist")
+if __name__ == "__main__":
+    print("--------------------Starting Test 1--------------------")
+    bc = BlockChain()
+    bc.insert("my first sentence")
+    bc.insert("Here's a second sentence. Have two now!")
+    bc.insert("A third sentence is now being added to the block-chain")
+    b = bc.getByHash("HashThatDoesN'tExist")
+    print(b)
+    print(bc)
+    print("--------------------Starting Test 2--------------------")
+    bc2 = BlockChain()
+    print(bc2)
+    print("--------------------Starting Test 3--------------------")
+    bc3 = BlockChain()
+    timestamp = datetime.now().__str__()
+    bc3.insert("my first sentence", timestamp=timestamp)
+    bc3.insert("Here's a second sentence. Have two now!", timestamp=timestamp)
+    bc3.insert("A third sentence is now being added to the block-chain", timestamp=timestamp)
+    print(bc3)  # note that the printed hashes are different!
+    print("--------------------Starting Test 4--------------------")
+    bc4 = BlockChain()
+    timestamp = datetime.now().__str__()
+    bc4.insert("my first sentence", timestamp=timestamp)
+    bc4.insert("second sentence", timestamp=timestamp)
+    bc4.insert("second sentence", timestamp=timestamp)  # timestamp and data the same
+    print(bc4)  # note that the printed hashes are different!
+

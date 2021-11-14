@@ -39,57 +39,88 @@
 # Code to demonstrate the use of some of the OS modules in python
 
 import os
-
 # Let us print the files in the directory in which you are running this script
-print (os.listdir("."))
-
+# print (os.listdir("."))
 # Let us check if this file is indeed a file!
-print (os.path.isfile("./ex.py"))
-
+# print (os.path.isfile("./ex.py"))
 # Does the file end with .py?
-print ("./ex.py".endswith(".py"))
+# print ("./ex.py".endswith(".py"))
+
+#--------------TIME AND SPACE COMPLEXITY ANALYSES----------
+# SPACE:  sizeof(list) + sizeof(path) * n,     sizeof(path) is a string of 100 chars (100 bytes)
+# TIME:   O(n ** 2),      if n directories and each has n child
 
 
-def find_files(suffix, path):
-    """
-    Find all files beneath path with file name suffix.
+class FilesFinder(object):
+    def __init__(self, suffix, path):
+        self.out = self.find_files(suffix, path)
 
-    Note that a path may contain further subdirectories
-    and those subdirectories may also contain further subdirectories.
+    def __str__(self):
+        out = ""
+        if len(self.out) > 0:
+            out += "Paths are as follows:\n"
+            for item in self.out:
+                out += item + "\n"
+        else:
+            out += "No paths found to print!\n"
+        return out
 
-    There are no limit to the depth of the subdirectories can be.
+    def find_files(self, suffix, path):
+        """
+        Find all files beneath path with file name suffix.
 
-    Args:
-      suffix(str): suffix if the file name to be found
-      path(str): path of the file system
+        Note that a path may contain further subdirectories
+        and those subdirectories may also contain further subdirectories.
 
-    Returns:
-       a list of paths
-    """
-    def find_files_recur(found_files, suffix, itemfullpath):
-        # discard the filename and extension (if any)
-        # dirpath = os.path.split(path)[0]
-        dirpath = itemfullpath
-        if os.path.isfile(itemfullpath):
-            dirpath = os.path.dirname(itemfullpath)
-        dircontent = os.listdir(dirpath)
-        for item in dircontent:
-            itemfullpath = os.path.join(dirpath, item)
+        There are no limit to the depth of the subdirectories can be.
+
+        Args:
+          suffix(str): suffix if the file name to be found
+          path(str): path of the file system
+
+        Returns:
+           a list of paths
+        """
+        def find_files_recur(found_files, suffix, itemfullpath):
+            # discard the filename and extension (if any)
+            # dirpath = os.path.split(path)[0]
+            dirpath = itemfullpath
             if os.path.isfile(itemfullpath):
-                split = item.split(".")
-                if len(split) > 1:  # name has extendion
-                    if split[-1] == suffix:
-                        found_files.append(itemfullpath.replace("\\", "/"))
-            if os.path.isdir(itemfullpath):
-                find_files_recur(found_files, suffix, itemfullpath)
+                dirpath = os.path.dirname(itemfullpath)
+            if not os.path.isdir(dirpath):
+                print(f"Directory \"{dirpath}\" is invalid!")
+                return
+            dircontent = os.listdir(dirpath)
+            for item in dircontent:
+                itemfullpath = os.path.join(dirpath, item)
+                if os.path.isfile(itemfullpath):
+                    split = item.split(".")
+                    if len(split) > 1:  # name has extendion
+                        if split[-1] == suffix:
+                            found_files.append(itemfullpath.replace("\\", "/"))
+                if os.path.isdir(itemfullpath):
+                    find_files_recur(found_files, suffix, itemfullpath)
 
-    found_files = list()
-    find_files_recur(found_files, suffix, path)
-    return found_files
+        found_files = list()
+        find_files_recur(found_files, suffix, path)
+        return found_files
 
 
 
 if __name__ == "__main__":
-    out = find_files("h", "C:/Users/babakg/iCloudDrive/MyTechnicalTrainings/Udacity Data Structures Algorithms/05-Chapter2-trees-maps-project-Show-me-the-data-structures/2-finding-files-test-dir/testdir/")
-    print(out)
-    a = 0
+    parent_dir = os.getcwd()
+    valid_dir = os.path.join("2-finding-files-test-dir", "testdir")
+    invalid_dir = "testdir_non_existant"
+    empty_dir = ""
+    valid_path = os.path.join(parent_dir, valid_dir)
+    invalid_path = os.path.join(parent_dir, invalid_dir)
+    empty_path = empty_dir
+    print("--------------------Starting Test 1--------------------")
+    ff1 = FilesFinder("h", valid_path)
+    print(ff1)
+    print("--------------------Starting Test 2--------------------")
+    ff2 = FilesFinder("h", invalid_path)
+    print(ff2)
+    print("--------------------Starting Test 3--------------------")
+    ff3 = FilesFinder("h", empty_path)
+    print(ff3)

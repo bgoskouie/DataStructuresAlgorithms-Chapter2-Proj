@@ -19,7 +19,21 @@
 # For the current problem, you can consider the size of cache = 5.
 
 # Here is some boiler plate code and some example test cases to get you started on this problem:
-
+#--------------TIME AND SPACE COMPLEXITY ANALYSES----------
+# SPACE:  sizeof(uint) * (2*n + 11)
+# TIME:   All of O(1)
+#
+# DETAILS:
+# SPACE:
+# Node class: space 4 uints
+# DoublyLinkedList:  space 2 uints + 2 Nodes = 10 uints
+# LRU_Cache:  1 uint, 1 DoublyLinkedList, 1 dict (2 * n * uint)
+# 
+# TIME:
+# moveNodeToHead: O(1)
+# popNode: O(1)
+# pop: O(1)
+# putNode: O(1)
 
 class Node():
     def __init__(self, key, value):
@@ -107,15 +121,33 @@ class DoublyLinkedList():
         return out
 
 
-class LRU_Cache(object):
+def check_capacity_health(capacity):
+    # Health check on capacity:
+    if capacity is None or not isinstance(capacity, int) or not capacity >= 0:
+        print(f"capacity \"{capacity}\" is unacceptable.")
+        return False
+    return True
 
+
+def check_capacity_dec(func):
+    def wrapper(obj, *args, **kwargs):
+        if check_capacity_health(obj.capacity):
+            func(obj, *args, **kwargs)
+    return wrapper
+
+
+class LRU_Cache(object):
     def __init__(self, capacity):
+        self.capacity = capacity
+        if not check_capacity_health(capacity):
+            return
         # Initialize class variables
         self.dll = DoublyLinkedList(capacity)
         # to store key -> Node pairs of what is present in the queue
         # so it would give us O(1) access to the Node element
         self.d = dict()
 
+    @check_capacity_dec
     def get(self, key):
         # Retrieve item from provided key. Return -1 if nonexistent.
         value = -1
@@ -127,6 +159,7 @@ class LRU_Cache(object):
         print(self.dll)
         return value
 
+    @check_capacity_dec
     def set(self, key, value):
         # Set the value if the key is not present in the cache. If the cache is at capacity remove the oldest item. 
         new_node = Node(key, value)
@@ -143,9 +176,10 @@ class LRU_Cache(object):
             self.d.update({key: new_node})
         print(self.dll)
 
-if __name__ == "__main__":
-    a = 0
 
+if __name__ == "__main__":
+    # Test case 1:
+    print("Starting running Test #1")
     our_cache = LRU_Cache(5)
 
     our_cache.set(1, 1)
@@ -161,4 +195,22 @@ if __name__ == "__main__":
     e = our_cache.set(6, 6)
 
     f = our_cache.get(3)      # returns -1 because the cache reached it's capacity and 3 was the least recently used entry
-    a = 0
+
+    # Test case 2:
+    print("Starting running Test #2")
+    our_cache2 = LRU_Cache(None)
+    our_cache2.set(1,1)
+    our_cache2.get(1)
+
+    # Test case 3:
+    print("Starting running Test #3")
+    our_cache3 = LRU_Cache(-1)
+
+    # Test case 4:
+    print("Starting running Test #4")
+    our_cache4 = LRU_Cache([5])
+
+    # Test case 5:
+    print("Starting running Test #5")
+    our_cache5 = LRU_Cache("Capacity")
+

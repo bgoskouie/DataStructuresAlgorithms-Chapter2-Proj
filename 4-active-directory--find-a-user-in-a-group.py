@@ -42,14 +42,34 @@ def is_user_in_group(user, group):
     return recur(user, group)
 
 
-parent = Group("parent")
-child = Group("child")
-sub_child = Group("subchild")
+if __name__ == "__main__":
+    print("--------------------Starting Test 1--------------------")
+    parent1 = Group("parent")
+    child1 = Group("child")
+    sub_child1 = Group("subchild")
 
-sub_child_user = "sub_child_user"
-sub_child.add_user(sub_child_user)
+    sub_child_user1 = "sub_child_user"
+    sub_child1.add_user(sub_child_user1)
 
-child.add_group(sub_child)
-parent.add_group(child)
-result = is_user_in_group("sub_child_user", parent)
-print(result)
+    child1.add_group(sub_child1)
+    parent1.add_group(child1)
+    result1 = is_user_in_group("sub_child_user", parent1)   # should return True
+    print(result1)
+
+    print("--------------------Starting Test 2--------------------")
+    parent2 = Group("parent")
+    child2 = Group("child")
+    sub_child2 = Group("subchild")
+
+    sub_child_user2 = ""   # user is empty!
+    sub_child2.add_user(sub_child_user2)
+
+    child2.add_group(sub_child2)
+    parent2.add_group(child2)
+    result2 = is_user_in_group("sub_child_user", parent2)  # should return False
+    print(result2)
+
+    print("--------------------Starting Test 3--------------------")
+    parent3 = Group("parent")
+    result3 = is_user_in_group("sub_child_user", parent3)  # should return False
+    print(result3)
