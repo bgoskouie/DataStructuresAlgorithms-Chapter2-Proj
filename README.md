@@ -13,7 +13,7 @@ This Project includs six tasks:
 - Linked List: Intersection and Union
 
 The Solution of each of these tasks is in a single .py file under the name of 1-xxx.py.
-The Big O analysis can be found within the same .py file of each project.
+The Big O analysis can be found within the 1-explanations.md file, 2-explanantion.md, and so on for each task.
 
 
 Useful Links/Resources:

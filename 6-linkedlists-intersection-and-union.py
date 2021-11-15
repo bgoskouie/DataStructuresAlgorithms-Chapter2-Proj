@@ -9,11 +9,11 @@
 # union:
 #           SPACE:    1LinkedList (4n) + 1dict (4 + 1)n = 9n
 #           TIME:     O(n ** 2)
-#
+
 # intersection:
 #           SPACE:    1LinkedList (4n) + 2dict (4 + 1)n = 14n
 #           TIME:     O(n)
-#
+
 # DETAILS:
 # Node:
 #       SPACE:  2 * sizeof(uint)
@@ -199,7 +199,7 @@ if __name__ == "__main__":
     linked_list_32 = LinkedList()
 
     element_1 = []
-    element_2 = [1,7,8,9,11,21,1]
+    element_2 = []
 
     for i in element_1:
         linked_list_31.append(i)
@@ -215,23 +215,3 @@ if __name__ == "__main__":
     test_union(element_1, element_2, u)
     test_inter(element_1, element_2, i)
 
-    print("--------------------Starting Test 4--------------------")
-    linked_list_41 = LinkedList()
-    linked_list_42 = LinkedList()
-
-    element_1 = []
-    element_2 = [1,7,8,9,11,21,1]
-
-    for i in element_1:
-        linked_list_41.append(i)
-
-    for i in element_2:
-        linked_list_42.append(i)
-
-    u = union(linked_list_41,linked_list_42)
-    i = intersection(linked_list_41,linked_list_42)
-
-    print(f"union: {u}")
-    print(f"intersection: {i}")
-    test_union(element_1, element_2, u)
-    test_inter(element_1, element_2, i)

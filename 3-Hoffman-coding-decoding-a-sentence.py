@@ -62,9 +62,9 @@
 
 #--------------TIME AND SPACE COMPLEXITY ANALYSES----------
 # SPACE:    2 * n * sizeof(uint)
-# TIME:     huffman_encoding:   O(n ** 2 / 2)
-#           huffman_decoding:   O(n)
-#
+# TIME:     hoffman_encoding:   O(n ** 2 / 2)
+#           hoffman_decoding:   O(n)
+
 # DETAILS:
 # HoffmanNode:
 #       SPACE:  2 uints;

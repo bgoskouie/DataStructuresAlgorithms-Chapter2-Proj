@@ -5,7 +5,7 @@
 #--------------TIME AND SPACE COMPLEXITY ANALYSES----------
 # SPACE:    2 * n * 10   (assuming each string would take 10 chars = 10 bytes)
 # TIME:     is_user_in_group:   O(n**2)
-#
+
 # DETAILS:
 # Group:
 #       SPACE:  1 string, 2 lists;
