@@ -47,8 +47,11 @@ import os
 # print ("./ex.py".endswith(".py"))
 
 #--------------TIME AND SPACE COMPLEXITY ANALYSES----------
-# SPACE:  sizeof(list) + sizeof(path) * n,     sizeof(path) is a string of 100 chars (100 bytes)
-# TIME:   O(n ** 2),      if n directories and each has n child
+# SPACE:  O(n)
+# TIME:   O(n)
+# Details:
+# space: sizeof(list) + sizeof(path) * n,     sizeof(path) is a string of 100 chars (100 bytes)
+# TIME: if n directories and each has n child
 
 
 class FilesFinder(object):

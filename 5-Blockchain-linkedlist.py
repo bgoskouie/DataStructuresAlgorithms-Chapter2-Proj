@@ -15,15 +15,15 @@
 
 #--------------TIME AND SPACE COMPLEXITY ANALYSES----------
 # - Overall
-#     - SPACE:  246 + 68 * n  bytes
-#     - TIME:     O(1)
+#     - SPACE:      O(n)
+#     - TIME:       O(1)
 
 # - DETAILS:
 #     - Block:
 #         - SPACE:  timestamp (50 chars) + data (1uint) + previous_hash (64) + hash (64) = 182 bytes
 #         - TIME:   O(1)
 #     - BlockChain:
-#         - SPACE:  1Block (182) + 1hash (64) + 1dict (64 + 4) * n = 246 + 68 * n bytes
+#         - SPACE:  1Block (182) + 1hash (64) + 1dict (64 + 4) * n = 246 + 68 * n bytes ~~ O(n)
 #         - TIME:   O(1)
 
 

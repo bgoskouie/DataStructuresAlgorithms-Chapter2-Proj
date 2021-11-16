@@ -42,5 +42,9 @@ If there are n deep directories and m items in each one the time analysis is of 
 
 # Time and Space Analyses:
 - Overall
-    - SPACE:  sizeof(list) + sizeof(path) * n,     sizeof(path) is a string of 100 chars (100 bytes)
-    - TIME:   O(n * m),      if n directories and each has m child
+    - SPACE:  O(n)
+    - TIME:   O(n)
+
+- Details:
+    - SPACE:    sizeof(list) + sizeof(path) * n,     sizeof(path) is a string of 100 chars (100 bytes) ~~ O(n)
+    - TIME:     Because we run loop on the number of directories

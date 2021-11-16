@@ -61,8 +61,8 @@
 # You will have to implement the logic for both encoding and decoding in the following template. Also, you will need to create the sizing schemas to present a summary.
 
 #--------------TIME AND SPACE COMPLEXITY ANALYSES----------
-# SPACE:    2 * n * sizeof(uint)
-# TIME:     hoffman_encoding:   O(n ** 2 / 2)
+# SPACE:    O(n)
+# TIME:     hoffman_encoding:   O(n * log(n))
 #           hoffman_decoding:   O(n)
 
 # DETAILS:
@@ -71,13 +71,13 @@
 #       TIME:   setNext O(1), isPrior O(1)
 # PriorityQueue:
 #       SPACE:  1 HoffmanNode, 1 uint;
-#       TIME:   insert O(n), pop O(1)
+#       TIME:   insert O(n), pop O(1); as we insert, n grows. so this is really log(n) when combined with hoffman_encoding.
 # huffmanGetCharactersCodes:
 #       SPACE:  sizeof(uint)*(2*n) + n**2/2;
 #       TIME:   O(n)
 # huffman_encoding:
 #       SPACE:  1 PriorityQueue, n HoffmanNodes = ((n + 1) * 2 + 1)* sizeof(uint)  ~ 2n*sizeof(uint)
-#       TIME:   O(n ** 2 / 2)
+#       TIME:   O(n * log(n))
 # huffman_decoding:
 #       TIME:   O(n)
 
